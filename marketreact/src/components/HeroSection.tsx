@@ -16,7 +16,10 @@ const HeroSection = () => {
               Uma plataforma completa para comprar e vender produtos exclusivos, conectando vendedores e compradores em um só lugar.
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-              <Button className="bg-amora-brown hover:bg-amora-darkBrown text-white px-8 py-6 text-lg">
+              <Button 
+                className="bg-amora-brown hover:bg-amora-darkBrown text-white px-8 py-6 text-lg"
+                onClick={() => navigate('/manage-products')}
+              >
                 Explorar Produtos
               </Button>
               <Button 

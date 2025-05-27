@@ -59,50 +59,32 @@ const ManageProducts: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Manage Products</h2>
+    <div className="max-w-6xl mx-auto mt-10 p-6 border rounded shadow">
+      <h2 className="text-2xl font-bold mb-6">Manage Products</h2>
       {products.length === 0 ? (
         <p>No products found.</p>
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">ID</th>
-              <th className="border border-gray-300 px-4 py-2">Name</th>
-              <th className="border border-gray-300 px-4 py-2">Description</th>
-              <th className="border border-gray-300 px-4 py-2">Price</th>
-              <th className="border border-gray-300 px-4 py-2">Category</th>
-              <th className="border border-gray-300 px-4 py-2">Image</th>
-              <th className="border border-gray-300 px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(({ id, name, description, price, category, image_url }) => (
-              <tr key={id}>
-                <td className="border border-gray-300 px-4 py-2">{id}</td>
-                <td className="border border-gray-300 px-4 py-2">{name}</td>
-                <td className="border border-gray-300 px-4 py-2">{description || '-'}</td>
-                <td className="border border-gray-300 px-4 py-2">${price.toFixed(2)}</td>
-                <td className="border border-gray-300 px-4 py-2">{category || '-'}</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {image_url ? (
-                    <img src={image_url} alt={name} className="h-12 w-12 object-contain" />
-                  ) : (
-                    '-'
-                  )}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  <button
-                    onClick={() => handleDelete(id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {products.map(({ id, name, price, image_url }) => (
+            <div key={id} className="border rounded shadow p-4 flex flex-col items-center">
+              {image_url ? (
+                <img src={image_url} alt={name} className="h-40 w-40 object-contain mb-4" />
+              ) : (
+                <div className="h-40 w-40 bg-gray-200 flex items-center justify-center mb-4">
+                  <span className="text-gray-500">No Image</span>
+                </div>
+              )}
+              <h3 className="text-lg font-semibold mb-2">{name}</h3>
+              <p className="text-gray-700 mb-4">${price.toFixed(2)}</p>
+              <button
+                onClick={() => handleDelete(id)}
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
