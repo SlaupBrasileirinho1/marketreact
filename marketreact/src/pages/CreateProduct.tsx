@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
 
 const CreateProduct: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const CreateProduct: React.FC = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -54,11 +57,16 @@ const CreateProduct: React.FC = () => {
           category: '',
           image_url: '',
         });
+        toast({
+          title: 'Feito',
+          description: 'Produto cadastrado com sucesso.',
+        });
+        navigate('/manage-products');
       } else {
         const errorData = await response.json();
         setMessage(`Error: ${errorData.error || 'Failed to create product'}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       setMessage(`Error: ${error.message}`);
     }
   };
