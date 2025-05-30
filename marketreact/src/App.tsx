@@ -11,28 +11,33 @@ import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
 import CreateProduct from "./pages/CreateProduct";
 import ManageProducts from "./pages/ManageProducts";
+import Checkout from "./pages/Checkout";
+import { CartProvider } from "./context/CartContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/produtos" element={<Products />} />
-          <Route path="/contato" element={<Contact />} />
-          <Route path="/sobre" element={<About />} />
-          <Route path="/produtos/:id" element={<ProductDetails />} />
-          <Route path="/create-product" element={<CreateProduct />} />
-          <Route path="/manage-products" element={<ManageProducts />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <CartProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/produtos" element={<Products />} />
+            <Route path="/contato" element={<Contact />} />
+            <Route path="/sobre" element={<About />} />
+            <Route path="/produtos/:id" element={<ProductDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/create-product" element={<CreateProduct />} />
+            <Route path="/manage-products" element={<ManageProducts />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </CartProvider>
   </QueryClientProvider>
 );
 

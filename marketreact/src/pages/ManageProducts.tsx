@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useCart } from '@/context/CartContext';
 
 interface Product {
   id: number;
@@ -13,6 +14,7 @@ const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const { addToCart } = useCart();
 
   const fetchProducts = async () => {
     try {
@@ -50,6 +52,17 @@ const ManageProducts: React.FC = () => {
     }
   };
 
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.image_url || "",
+      seller: product.category || "Unknown",
+      quantity: 1,
+    });
+  };
+
   if (loading) {
     return <p>Loading products...</p>;
   }
@@ -65,7 +78,7 @@ const ManageProducts: React.FC = () => {
         <p>No products found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {products.map(({ id, name, price, image_url }) => (
+          {products.map(({ id, name, description, price, image_url, category }) => (
             <div key={id} className="border rounded shadow p-4 flex flex-col items-center">
               {image_url ? (
                 <img src={image_url} alt={name} className="h-40 w-40 object-contain mb-4" />
@@ -75,7 +88,14 @@ const ManageProducts: React.FC = () => {
                 </div>
               )}
               <h3 className="text-lg font-semibold mb-2">{name}</h3>
+              <p className="text-gray-600 mb-2">{description}</p>
               <p className="text-gray-700 mb-4">${price.toFixed(2)}</p>
+              <button
+                onClick={() => handleAddToCart({ id, name, description, price, category, image_url })}
+                className="bg-amora-brown text-white px-4 py-2 rounded hover:bg-amora-darkBrown mb-2"
+              >
+                Adicionar ao Carrinho
+              </button>
               <button
                 onClick={() => handleDelete(id)}
                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"

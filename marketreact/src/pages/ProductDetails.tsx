@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
 
 interface Product {
   id: number;
@@ -12,6 +13,7 @@ interface Product {
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { addToCart } = useCart();
 
   // This is a mock product. In a real application, you would fetch this data from your API
   const product: Product = {
@@ -21,6 +23,16 @@ const ProductDetails = () => {
     imageUrl: "https://example.com/image.jpg",
     seller: "Seller Name",
     description: "Detailed product description goes here..."
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      seller: product.seller,
+    });
   };
 
   return (
@@ -38,7 +50,7 @@ const ProductDetails = () => {
           <p className="text-gray-600">Vendido por: {product.seller}</p>
           <p className="text-2xl font-semibold">R$ {product.price.toFixed(2)}</p>
           <p className="text-gray-700">{product.description}</p>
-          <Button className="w-full bg-amora-brown hover:bg-amora-darkBrown">
+          <Button className="w-full bg-amora-brown hover:bg-amora-darkBrown" onClick={handleAddToCart}>
             Adicionar ao Carrinho
           </Button>
         </div>

@@ -38,6 +38,10 @@ const Navbar = () => {
             <Link to="/sobre" className="text-amora-brown hover:text-amora-darkBrown font-medium transition-colors">
               Sobre
             </Link>
+            <Link to="/checkout" className="text-amora-brown hover:text-amora-darkBrown font-medium transition-colors flex items-center space-x-1">
+              <ShoppingCart className="h-5 w-5" />
+              <span>Checkout</span>
+            </Link>
           </div>
 
           {/* Cart and Mobile Menu Button */}
@@ -86,6 +90,14 @@ const Navbar = () => {
               onClick={toggleMenu}
             >
               Sobre
+            </Link>
+            <Link 
+              to="/checkout"
+              className="block text-amora-brown hover:text-amora-darkBrown font-medium transition-colors flex items-center space-x-1"
+              onClick={toggleMenu}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              <span>Checkout</span>
             </Link>
           </div>
         )}
