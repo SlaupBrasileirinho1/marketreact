@@ -18,14 +18,19 @@ const ManageProducts: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/products');
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiBaseUrl}/api/products`);
       if (!response.ok) {
         throw new Error('Failed to fetch products');
       }
       const data = await response.json();
       setProducts(data.products);
-    } catch (err: any) {
-      setError(err.message || 'Error fetching products');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Error fetching products');
+      }
     } finally {
       setLoading(false);
     }
@@ -40,15 +45,20 @@ const ManageProducts: React.FC = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${id}`, {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiBaseUrl}/api/products/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
         throw new Error('Failed to delete product');
       }
       setProducts(products.filter((product) => product.id !== id));
-    } catch (err: any) {
-      alert(err.message || 'Error deleting product');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert('Error deleting product');
+      }
     }
   };
 
@@ -59,7 +69,6 @@ const ManageProducts: React.FC = () => {
       price: product.price,
       imageUrl: product.image_url || "",
       seller: product.category || "Unknown",
-      quantity: 1,
     });
   };
 

@@ -39,7 +39,8 @@ const CreateProduct: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3001/api/products', {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiBaseUrl}/api/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
